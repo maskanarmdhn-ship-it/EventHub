@@ -127,6 +127,38 @@ app.get('/profile', verifyToken, (req, res) => {
     });
 });
 
+app.post('/event', verifyToken, (req, res) => {
+
+    const {judul, deskripsi, tanggal, lokasi, kuota} = req.body;
+
+    const sql = `
+        insert into event (judul, deskripsi, tanggal, lokasi, kuota, created_by)
+        values (?, ?, ?, ?, ?, ?)
+        `;
+
+        db.query(
+            sql,
+            [
+                judul,
+                deskripsi,
+                tanggal,
+                lokasi,
+                kuota,
+                req.user.id
+            ],
+            (err, result) => {
+
+                if (err) {
+                    return res.status(500).json(err);
+                }
+
+                res.json({
+                    message: "Event berhasil ditambahkan"
+                });
+            }
+        );
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
