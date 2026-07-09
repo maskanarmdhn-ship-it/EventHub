@@ -3,7 +3,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
-
+const verifyToken = require('./middleware/auth');
 
 const app = express();
 
@@ -119,6 +119,13 @@ app.post('/login', (req,res) => {
     });
 });
 
+app.get('/profile', verifyToken, (req, res) => {
+
+    res.json({
+        message: "Berhasil mengakses profile",
+        user: req.user
+    });
+});
 
 const PORT = 3000;
 
