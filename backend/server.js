@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const db = require('./db');
 
 
 const app = express();
 
+const SECRET_KEY = "eventhub_rahasia";
 app.use(cors());
 app.use(express.json());
 
@@ -83,13 +85,30 @@ app.post('/login', (req,res) => {
 
         bcrypt.compare(password, user.password, (err, isMatch) => {
 
+            if (err) {
+                return res.status(500).json(err);
+            }
+
             if (!isMatch) {
                 return res.status(401).json({
                     message: "Password salah"
                 });
             }
+
+            const token = jwt.sign (
+                {
+                    id: user.id,
+                    nama: user.nama,
+                    email: user.email
+                },
+                SECRET_KEY,
+                {
+                    expiresIn: "1h"
+                }
+            );
             res.json({
-                message : 'Login berhasil',
+                message : "Login berhasil",
+                token: token,
                 user: {
                     id : user.id,
                     nama : user.nama,
