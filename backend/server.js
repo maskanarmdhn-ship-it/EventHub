@@ -159,6 +159,127 @@ app.post('/event', verifyToken, (req, res) => {
         );
 });
 
+app.get('/event', (req, res) => {
+
+    const sql = `
+        select
+            event.id,
+            event.judul,
+            event.deskripsi,
+            event.tanggal,
+            event.lokasi,
+            event.kuota,
+            user.nama as pembuat
+        from event
+        join user
+        on event.created_by = user.id
+    `;
+
+    db.query(sql, (err, result) => {
+
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        res.json(result);
+
+    });
+});
+
+app.get('/event/:id', (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = `
+        select 
+            event.id,
+            event.judul,
+            event.deskripsi,
+            event.tanggal,
+            event.lokasi,
+            event.kuota,
+            user.nama as pembuat
+        from event
+        join user
+        on event.created_by = user.id
+        where event.id = ?
+    `;
+
+    db.query(sql, [id], (err, result) => {
+
+        if (err) {
+            return res.status(5000).json(err);
+        }
+
+        if (result.length ===0) {
+            return res.status(400).json({
+                message: "Event tidak ditemukan"
+            });
+        }
+
+        res.json(result[0]);
+        
+    });
+});
+
+app.put('/event/:id', verifyToken, (req, res) => {
+
+    const id = req.params.id;
+    const {judul, deskripsi, tanggal, lokasi, kuota} = req.body;
+
+    const sql = `
+        update event
+        set
+            judul = ?,
+            deskripsi = ?,
+            tanggal = ?,
+            lokasi = ?,
+            kuota = ?
+        where id = ?
+    `;
+
+    db.query (
+        sql,
+        [judul, deskripsi, tanggal, lokasi, kuota, id],
+        (err, result) => {
+
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                message: "Event berhasil diupadate"
+            });
+        }
+    );
+;})
+
+app.delete('/event/:id', verifyToken, (req, res) =>{
+
+    const id = req.params.id;
+
+    const sql =  `
+        delete from event
+        where id = ?
+    `;
+
+    db.query(sql, [id], (err, result) => {
+
+        if (err) {
+            return res.status(500).json(err);
+        }
+        if (result.affectedRows ===0) {
+            return res.status(404).json({
+                message: "Event tidak ditemukan"
+            });
+        }
+
+        req.json({
+            message: "Event berhasil dihapus"
+        });
+    });
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {
