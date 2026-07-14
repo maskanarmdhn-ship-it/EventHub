@@ -10,6 +10,7 @@
     let tanggal = "";
     let lokasi = "";
     let kuota = "";
+    let editId = null;
 
     async function loadEvent () {
         try {
@@ -67,10 +68,152 @@
             });
         }
     }
+
+    function editEvent(event) {
+
+        editId = event.id;
+
+        judul = event.judul;
+        deskripsi = event.deskripsi;
+        tanggal = event.tanggal.spilt("T")[0];
+        lokasi = event.lokasi;
+        kuota = event.kuota;
+    }
+
+    async function updateEvent() {
+
+        try {
+
+            const token = localStorage.getItem("token");
+
+            await api.put (
+                `/event/${editId}`,
+            {
+                judul,
+                deskripsi,
+                tanggal,
+                lokasi,
+                kuota
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+            );
+            Swal.fire ({
+                icon: "success",
+                title: "Event berhasil diupdate"
+            });
+
+            editId = null;
+
+            judul = "";
+            deskripsi = "";
+            tanggal = "";
+            lokasi = "";
+            kuota = "";
+
+            loadEvent();
+        } catch (err) {
+
+            console.log(err);
+
+            Swal.fire({
+                icon: "error",
+                title: "Gagal mengupdate event"
+            });
+        }
+    }
+
+
+    async function hapusEvent(id) {
+
+        const konfirmasi = await Swal.fire({
+            title: "Hapus Event?",
+            text: "Event yang dihapus tidak dapat dikembalikan.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Hapus",
+            cancelButtonText: "Batal"
+        });
+
+        if (!konfirmasi.isConfirmed) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem("token");
+
+            await api.delete(
+                `/event/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            Swal.fire({
+                icon: "success",
+                title: "Event berhasil dihapus"
+            });
+
+            loadEvent();
+
+        }catch(err) {
+
+            console.log(err);
+
+            Swal.fire({
+                icon: "error",
+                title: "Gagal menghapus event"
+            });
+        }
+    }
+
+    async function logout() {
+
+        const konfirmasi = await Swal.fire({
+            title: "Log Out?",
+            text: "Anda akan keluar dari akun.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Ya",
+            cancelButtonText: "Batal"
+        });
+
+        if (!konfirmasi.isConfirmed) {
+            return;
+        }
+
+        localStorage.removeItem("token");
+
+        Swal.fire ({
+            icon: "success",
+            title: "Logout berhasil",
+            timer: 1000,
+            showCancelButton: false
+        });
+
+        setTimeout (() => {
+            window.location.href = "/";
+        }, 1000);
+    }
+
+
+
 </script>
 
-<div class="container mt-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="mb-4">Dashboard Eventhub </h2>
+
+    <button
+    class="btn btn-danger"
+    onclick={logout}>
+        Logout
+    
+    </button>
 
     <div class="card mb-4">
 
@@ -111,12 +254,43 @@
                 placeholder="Kuota"
             />
 
+            {#if editId === null}
+
             <button
             class="btn btn-success"
             onclick={tambahEvent}
             >
                 Simpan Event
             </button>
+
+            {:else}
+
+            <button
+            class="btn btn=warning"
+            onclick={updateEvent}
+            >
+                Update event
+            </button>
+
+            <button
+            class="btn btn-secondary ms-2"
+            onclick={() => {
+
+                editId = null;
+
+                judul = "";
+                deskripsi = "";
+                tanggal = "";
+                lokasi = "";
+                kuota = "";
+
+            }}
+            >
+                Batal
+
+            </button>
+
+            {/if}
 
         </div>
     </div>
@@ -149,11 +323,16 @@
 
                     <p><b>Pembuat : </b> {event.pembuat}</p>
 
-                    <button class="btn btn-warning me-2">
+                    <button 
+                    class="btn btn-warning me-2"
+                    onclick={ () => editEvent(event)}
+                    >
                         Edit
                     </button>
 
-                    <button class="btn btn-danger">
+                    <button 
+                    class="btn btn-danger"
+                    onclick={() => hapusEvent(event.id)}>
                         Hapus
                     </button>
 

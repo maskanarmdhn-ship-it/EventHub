@@ -274,7 +274,7 @@ app.delete('/event/:id', verifyToken, (req, res) =>{
             });
         }
 
-        req.json({
+        res.json({
             message: "Event berhasil dihapus"
         });
     });
