@@ -224,13 +224,35 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card bg-primary text-white shadow-sm border-0">
+            <div class="card-body">
+                <h6>Total Event</h6>
+                <h2>{events.length}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card bg-success text-white shadow-sm border-0">
+            <div class="card-body">
+                <h6>Total Kuota</h6>
+                <h2>
+                    {events.reduce((total, event)=> total + Number(event.kuota), 0)}
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="row">
         <div class="col-md-4">
 
              <div class="card mb-4">
 
         <div class="card-header bg-success text-white fw-bold">
-            Tambah Event📝
+            📝Tambah Event Baru
         </div>
 
         <div class="card-body">
@@ -302,6 +324,21 @@
 
             </button>
 
+            <button
+                class="btn btn-outline-secondary w-100 mt-2"
+                onclick={()=> {
+                    judul= "";
+                    deskripsi= "";
+                    tanggal= "";
+                    lokasi= "";
+                    kuota= "";
+                    editId= null;
+                }}
+            >
+                Reset form
+            </button>
+
+
             {/if}
 
         </div>
@@ -331,8 +368,8 @@
                         🎉{event.judul}
                     </h4>
 
-                    <p>{event.deskripsi}</p>
-
+                    <p class="text-muted">
+                        {event.deskripsi}</p>
                     <p>
                         🗓️<b>Tanggal : </b> 
                         {new Date(event.tanggal).toLocaleDateString("id-ID", {
@@ -373,3 +410,14 @@
 </div>
         
 </div>
+
+<style>
+.card {
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+}
+</style>
