@@ -206,26 +206,31 @@
 </script>
 
 <div class="container mt-4">
+<div class="card shadow-sm mb-4 border-0">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Dashboard Eventhub</h2>
+    <div class="card-body bg-primary text-white rounded d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-0 fw-bold">🎉Dashboard Eventhub</h2>
+            <small>Kelola seluruh event dengan mudah</small>
+        </div>
 
         <button
-        class="btn btn-danger"
+        class="btn btn-light text-danger"
         onclick={logout}
         >
             Logout
 
         </button>
     </div>
+</div>
 
     <div class="row">
         <div class="col-md-4">
 
              <div class="card mb-4">
 
-        <div class="card-header">
-            Tambah Event
+        <div class="card-header bg-success text-white fw-bold">
+            Tambah Event📝
         </div>
 
         <div class="card-body">
@@ -264,7 +269,7 @@
             {#if editId === null}
 
             <button
-            class="btn btn-success"
+            class="btn btn-success w-100 fw-bold"
             onclick={tambahEvent}
             >
                 Simpan Event
@@ -273,14 +278,14 @@
             {:else}
 
             <button
-            class="btn btn-warning"
+            class="btn btn-warning w-100 fw-bold"
             onclick={updateEvent}
             >
                 Update event
             </button>
 
             <button
-            class="btn btn-secondary ms-2"
+            class="btn btn-secondary w-100 mt-2"
             onclick={() => {
 
                 editId = null;
@@ -318,16 +323,18 @@
 
         {#each events as event}
 
-            <div class="card mb-3">
+            <div class="card shadow-sm border-0 mb-3">
 
                 <div class="card-body">
 
-                    <h4>{event.judul}</h4>
+                    <h4 class="fw-bold text-primary">
+                        🎉{event.judul}
+                    </h4>
 
                     <p>{event.deskripsi}</p>
 
                     <p>
-                        <b>Tanggal : </b> 
+                        🗓️<b>Tanggal : </b> 
                         {new Date(event.tanggal).toLocaleDateString("id-ID", {
                             day: "numeric",
                             month: "long",
@@ -335,21 +342,21 @@
                         })}
                     </p>
 
-                    <p><b>Lokasi : </b> {event.lokasi}</p>
+                    <p>📍<b>Lokasi : </b> {event.lokasi}</p>
 
-                    <p><b>Kuota : </b> {event.kuota}</p>
+                    <p>👥<b>Kuota : </b> {event.kuota}</p>
 
-                    <p><b>Pembuat : </b> {event.pembuat}</p>
+                    <p>👤<b>Pembuat : </b> {event.pembuat}</p>
 
                     <button 
-                    class="btn btn-warning me-2"
+                    class="btn btn-warning btn-sm me-2"
                     onclick={ () => editEvent(event)}
                     >
                         Edit
                     </button>
 
                     <button 
-                    class="btn btn-danger"
+                    class="btn btn-danger btn-sm"
                     onclick={() => hapusEvent(event.id)}>
                         Hapus
                     </button>
