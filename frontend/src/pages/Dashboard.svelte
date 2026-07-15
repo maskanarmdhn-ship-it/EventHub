@@ -75,7 +75,7 @@
 
         judul = event.judul;
         deskripsi = event.deskripsi;
-        tanggal = event.tanggal.spilt("T")[0];
+        tanggal = event.tanggal.split("T")[0];
         lokasi = event.lokasi;
         kuota = event.kuota;
     }
@@ -205,17 +205,24 @@
 
 </script>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-4">Dashboard Eventhub </h2>
+<div class="container mt-4">
 
-    <button
-    class="btn btn-danger"
-    onclick={logout}>
-        Logout
-    
-    </button>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Dashboard Eventhub</h2>
 
-    <div class="card mb-4">
+        <button
+        class="btn btn-danger"
+        onclick={logout}
+        >
+            Logout
+
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+
+             <div class="card mb-4">
 
         <div class="card-header">
             Tambah Event
@@ -266,7 +273,7 @@
             {:else}
 
             <button
-            class="btn btn=warning"
+            class="btn btn-warning"
             onclick={updateEvent}
             >
                 Update event
@@ -293,9 +300,13 @@
             {/if}
 
         </div>
+    
+         </div>
     </div>
 
-    <h3>Daftar Event</h3>
+    <div class="col-md-8">
+
+        <h3 class="mb-3">Daftar Event</h3>
 
     {#if events.length ===0}
 
@@ -315,7 +326,14 @@
 
                     <p>{event.deskripsi}</p>
 
-                    <p><b>Tanggal : </b> {event.tanggal}</p>
+                    <p>
+                        <b>Tanggal : </b> 
+                        {new Date(event.tanggal).toLocaleDateString("id-ID", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        })}
+                    </p>
 
                     <p><b>Lokasi : </b> {event.lokasi}</p>
 
@@ -343,5 +361,8 @@
         {/each}
 
     {/if}
+
+        </div>
+</div>
         
 </div>
