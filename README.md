@@ -32,7 +32,7 @@ node server.js
 ### Frontend
 
 ```bash
-cd antarmuka_pengguna
+cd frontend
 npm install
 npm run dev
 ```
