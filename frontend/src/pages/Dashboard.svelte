@@ -26,6 +26,21 @@
     });
 
     async function tambahEvent() {
+        if (
+            !judul.trim() ||
+            !deskripsi.trim() ||
+            !tanggal ||
+            !lokasi.trim() ||
+            !kuota
+        ) {
+            Swal.fire({
+                icon: "warning",
+                title: "Data belum lengkap",
+                text: "Semua field wajib diisi!"
+            });
+            return;
+        }
+
         try {
             const token = localStorage.getItem("token");
 
@@ -81,6 +96,34 @@
     }
 
     async function updateEvent() {
+
+         if (
+            !judul.trim() ||
+            !deskripsi.trim() ||
+            !tanggal ||
+            !lokasi.trim() ||
+            !kuota
+        ) {
+            Swal.fire({
+                icon: "warning",
+                title: "Data belum lengkap",
+                text: "Semua field wajib diisi!"
+            });
+            return;
+        }
+
+        const konfirmasi = await Swal.fire({
+            title: "Update Event?",
+            text: "Apakah Anda yakin ingin mengubah data event ini?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Update",
+            cancelButtonText: "Batal"
+        });
+
+        if (!konfirmasi.isConfirmed) {
+            return;
+        }
 
         try {
 
@@ -254,7 +297,7 @@
 
              <div class="card mb-4">
 
-        <div class="card-header bg-succes text-white fw-bold text-center">
+        <div class="card-header bg-success text-white fw-bold text-center">
             📝Tambah Event Baru
         </div>
 
@@ -327,6 +370,8 @@
 
             </button>
 
+            {/if}
+
             <button
                 class="btn btn-outline-secondary w-100 mt-2"
                 onclick={()=> {
@@ -340,9 +385,6 @@
             >
                 🗑️Reset form
             </button>
-
-
-            {/if}
 
         </div>
     
@@ -443,7 +485,7 @@
     transform: translateY(-6px);
 }
 
-.from-control:focus {
+.form-control:focus {
     border-color: #198754;
     box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
