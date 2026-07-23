@@ -226,10 +226,12 @@
 
 <div class="row mb-4">
     <div class="col-md-6">
-        <div class="card bg-primary text-white shadow-sm border-0">
+        <div class="card bg-primary text-white shadow-sm border-0 stat-card">
             <div class="card-body">
-                <h6>Total Event</h6>
-                <h2>{events.length}</h2>
+                <h6  class="text-uppercase fw-bold"
+                >Total Event</h6>
+                <h1 class="display-4"
+                >{events.length}</h1>
             </div>
         </div>
     </div>
@@ -237,10 +239,11 @@
     <div class="col-md-6">
         <div class="card bg-success text-white shadow-sm border-0">
             <div class="card-body">
-                <h6>Total Kuota</h6>
-                <h2>
+                <h6 class="text-uppercase fw-bold"
+                >Total Kuota</h6>
+                <h1 class="display-4">
                     {events.reduce((total, event)=> total + Number(event.kuota), 0)}
-                </h2>
+                </h1>
             </div>
         </div>
     </div>
@@ -419,5 +422,14 @@
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0,0,0,.15);
+}
+
+.stat-card  {
+    transition: .3s;
+    cursor: pointer;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
 }
 </style>
