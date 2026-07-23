@@ -338,7 +338,7 @@
                     editId= null;
                 }}
             >
-                Reset form
+                🗑️Reset form
             </button>
 
 
@@ -441,5 +441,10 @@
 
 .stat-card:hover {
     transform: translateY(-6px);
+}
+
+.from-control:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 </style>
