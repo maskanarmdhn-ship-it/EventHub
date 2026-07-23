@@ -251,7 +251,7 @@
 
              <div class="card mb-4">
 
-        <div class="card-header bg-success text-white fw-bold">
+        <div class="card-header bg-succes text-white fw-bold text-center">
             📝Tambah Event Baru
         </div>
 
@@ -294,7 +294,7 @@
             class="btn btn-success w-100 fw-bold"
             onclick={tambahEvent}
             >
-                Simpan Event
+                💾 Simpan Event
             </button>
 
             {:else}
@@ -303,7 +303,7 @@
             class="btn btn-warning w-100 fw-bold"
             onclick={updateEvent}
             >
-                Update event
+                ✏️ Update event
             </button>
 
             <button
