@@ -227,7 +227,7 @@
 <div class="row mb-4">
     <div class="col-md-6">
         <div class="card bg-primary text-white shadow-sm border-0 stat-card">
-            <div class="card-body">
+            <div class="card-body border-bottom">
                 <h6  class="text-uppercase fw-bold"
                 >Total Event</h6>
                 <h1 class="display-4"
@@ -384,9 +384,19 @@
 
                     <p>📍<b>Lokasi : </b> {event.lokasi}</p>
 
-                    <p>👥<b>Kuota : </b> {event.kuota}</p>
+                    <p>👥
+                        <b>Kuota : </b>
+                        <span class="badge bg-success">
+                         {event.kuota}Peserta 
+                            </span>
+                         </p>
 
-                    <p>👤<b>Pembuat : </b> {event.pembuat}</p>
+                    <p>👤
+                        <b>Pembuat : </b>
+                        <span class="badge bg-secondary">
+                         {event.pembuat}
+                        </span>
+                    </p>
 
                     <button 
                     class="btn btn-warning btn-sm me-2"
