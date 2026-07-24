@@ -1,43 +1,315 @@
-# Svelte + Vite
+# 🎉 EventHub
 
-This template should help get you started developing with Svelte in Vite.
+Aplikasi manajemen event berbasis web yang dibangun menggunakan **Svelte** sebagai frontend, **Express.js** sebagai backend, dan **MySQL** sebagai database. Aplikasi ini memungkinkan pengguna melakukan registrasi, login, serta mengelola data event melalui fitur CRUD (Create, Read, Update, Delete).
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+# Deskripsi Proyek
 
-## Need an official Svelte framework?
+EventHub dibuat untuk membantu pengguna dalam mengelola informasi event secara sederhana dan terpusat. Setelah berhasil login, pengguna dapat menambahkan, melihat, mengubah, dan menghapus data event. Selain itu, aplikasi juga menampilkan statistik jumlah event dan total kuota peserta sehingga memudahkan pengguna dalam memonitor data yang telah dibuat.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+---
 
-## Technical considerations
+# Anggota Kelompok
 
-**Why use this over SvelteKit?**
+| Nama | NIM | Pembagian Tugas |
+|------|------|-----------------|
+| **Dhani** | **2024520020** | Analisis kebutuhan sistem, perancangan database, pembuatan frontend menggunakan Svelte, pembuatan backend menggunakan Express.js, integrasi API, implementasi autentikasi (Login & Register), CRUD Event, dashboard statistik, validasi form, pengujian aplikasi, dokumentasi proyek, serta pengelolaan repositori GitHub. |
+| **Kevin** | **2024520084** | Membantu penyempurnaan tampilan antarmuka (UI), penyesuaian warna, tata letak dashboard, serta perbaikan beberapa tombol pada aplikasi. |
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+---
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+# Teknologi yang Digunakan
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+## Frontend
 
-**Why include `.vscode/extensions.json`?**
+- Svelte
+- Vite
+- Bootstrap 5
+- Axios
+- SweetAlert2
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+## Backend
 
-**Why enable `checkJs` in the JS template?**
+- Node.js
+- Express.js
+- MySQL
+- JSON Web Token (JWT)
+- bcrypt
+- dotenv
+- cors
 
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
+---
 
-**Why is HMR not preserving my local component state?**
+# Struktur Proyek
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
 ```
+EventHub
+│
+├── frontend
+│   ├── src
+│   ├── public
+│   ├── .env.example
+│   ├── package.json
+│   └── ...
+│
+├── backend
+│   ├── .env.example
+│   ├── db.js
+│   ├── server.js
+│   ├── package.json
+│   └── ...
+│
+└── README.md
+```
+
+---
+
+# Dokumentasi Database
+
+Database yang digunakan adalah **MySQL** dengan nama database:
+
+```
+eventhub
+```
+
+## Tabel Users
+
+| Field | Tipe Data |
+|--------|-----------|
+| id | INT |
+| nama | VARCHAR |
+| email | VARCHAR |
+| password | VARCHAR |
+
+## Tabel Event
+
+| Field | Tipe Data |
+|--------|-----------|
+| id | INT |
+| judul | VARCHAR |
+| deskripsi | TEXT |
+| tanggal | DATE |
+| lokasi | VARCHAR |
+| kuota | INT |
+| pembuat | VARCHAR |
+
+---
+
+## Relasi Database (Sederhana)
+
+```
+Users
+------
+id
+nama
+email
+password
+
+        │
+
+Event
+------
+id
+judul
+deskripsi
+tanggal
+lokasi
+kuota
+pembuat
+```
+
+> Apabila tersedia, diagram ERD dapat ditambahkan pada bagian ini.
+
+---
+
+# Dokumentasi Endpoint API
+
+| Method | Endpoint | Deskripsi |
+|---------|----------|-----------|
+| POST | `/register` | Registrasi pengguna baru |
+| POST | `/login` | Login pengguna |
+| GET | `/event` | Menampilkan seluruh data event |
+| POST | `/event` | Menambahkan event baru |
+| PUT | `/event/:id` | Mengubah data event |
+| DELETE | `/event/:id` | Menghapus data event |
+
+---
+
+## Contoh Request Register
+
+**POST** `/register`
+
+```json
+{
+  "nama": "Dhani",
+  "email": "dhani@gmail.com",
+  "password": "123456"
+}
+```
+
+Response
+
+```json
+{
+  "message": "Register berhasil"
+}
+```
+
+---
+
+## Contoh Request Login
+
+**POST** `/login`
+
+```json
+{
+  "email": "dhani@gmail.com",
+  "password": "123456"
+}
+```
+
+Response
+
+```json
+{
+  "token": "JWT_TOKEN"
+}
+```
+
+---
+
+## Contoh Request Tambah Event
+
+**POST** `/event`
+
+```json
+{
+  "judul": "Workshop Web",
+  "deskripsi": "Belajar Svelte",
+  "tanggal": "2026-07-24",
+  "lokasi": "Universitas Madura",
+  "kuota": 100
+}
+```
+
+---
+
+## Contoh Response Data Event
+
+```json
+[
+  {
+    "id": 1,
+    "judul": "Workshop Web",
+    "deskripsi": "Belajar Svelte",
+    "tanggal": "2026-07-24",
+    "lokasi": "Universitas Madura",
+    "kuota": 100,
+    "pembuat": "Dhani"
+  }
+]
+```
+
+---
+
+# Cara Menjalankan Aplikasi
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/maskanarmdhn-ship-it/EventHub.git
+```
+
+---
+
+## 2. Menjalankan Backend
+
+Masuk ke folder backend
+
+```bash
+cd backend
+```
+
+Install dependency
+
+```bash
+npm install
+```
+
+Jalankan server
+
+```bash
+node server.js
+```
+
+Server berjalan pada:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 3. Menjalankan Frontend
+
+Masuk ke folder frontend
+
+```bash
+cd frontend
+```
+
+Install dependency
+
+```bash
+npm install
+```
+
+Jalankan aplikasi
+
+```bash
+npm run dev
+```
+
+Frontend berjalan pada:
+
+```
+http://localhost:5173
+```
+
+---
+
+# Konfigurasi Environment
+
+Project ini menggunakan file konfigurasi environment yang dipisahkan menjadi:
+
+- `backend/.env.example`
+- `frontend/.env.example`
+
+Silakan salin masing-masing file `.env.example` menjadi `.env`, kemudian sesuaikan konfigurasi sesuai lingkungan yang digunakan.
+
+---
+
+# Fitur Aplikasi
+
+- Registrasi pengguna
+- Login menggunakan JWT
+- Dashboard aplikasi
+- Menampilkan daftar event
+- Menambahkan event
+- Mengubah data event
+- Menghapus event
+- Statistik total event
+- Statistik total kuota
+- Validasi form input
+- Konfirmasi update data
+- Konfirmasi hapus data
+- Logout
+- Antarmuka responsif menggunakan Bootstrap
+- Notifikasi menggunakan SweetAlert2
+
+---
+
+# Lisensi
+
+Proyek ini dibuat sebagai tugas **Ujian Akhir Semester (UAS) Mata Kuliah Pemrograman Web** Universitas Madura.

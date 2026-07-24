@@ -9,8 +9,8 @@ EventHub adalah aplikasi manajemen event berbasis web yang memungkinkan pengguna
 
 | Nama | NIM | Tugas |
 |------|-----|-------|
-| Kevin | xxxx | Backend, Database |
-| Nama Kamu | xxxx | Frontend, Integrasi API |
+| Dhani | 2024520020 | Analisis kebutuhan sistem, perancangan database, pembuatan frontend menggunakan Svelte, pembuatan backend menggunakan Express.js, integrasi API, implementasi autentikasi (login & register), CRUD Event, dashboard statistik, validasi form, pengujian aplikasi, dokumentasi proyek, serta deployment ke GitHub. |
+| Kevin | 2024520084 | Membantu penyempurnaan antarmuka (UI), penyesuaian tampilan dashboard, perbaikan warna, tata letak, serta penyempurnaan beberapa tombol pada aplikasi. |
 
 ---
 
